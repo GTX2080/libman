@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.library.manage.mapper.BookMapper">
+    <select id="getAllBook" parameterType="com.alibaba.fastjson.JSONObject" resultType="com.alibaba.fastjson.JSONObject">
+        select * from tbbook
+        <where>
+            <if test="bookId !=null and bookId != ''">
+              and bookId = #{bookId}
+            </if>
+            <if test="bookName !=null and bookName != ''">
+                and bookName like "%"#{bookName}"%"
+            </if>
+            <if test="author !=null and author != ''">
+                and author = #{author}
+            </if>
+            <if test="publisher !=null and publisher != ''">
+                and publisher = #{publisher}
+            </if>
+            <if test="isbn !=null and isbn != ''">
+                and isbn = #{isbn}
+            </if>
+            <if test="floor !=null and floor != ''">
+                and floor = #{floor}
+            </if>
+            <if test="bookshelf !=null and bookshelf != ''">
+                and bookshelf = #{bookshelf}
+            </if>
+            <if test="bookshelf !=null and bookshelf != ''">
+                and bookshelf = #{bookshelf}
+            </if>
+            <if test="classification !=null and classification != ''">
+                and classification = #{classification}
+            </if>
+            <if test="isDelete !=null and isDelete != ''">
+                and isDelete = #{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addBook" parameterType="com.alibaba.fastjson.JSONObject">
+        insert into tbbook
+         (  bookId,
+            bookName,
+            bookDescription,
+            author,
+            publisher,
+            isbn,
+            paperback,
+            img,
+            total,
+            Inventory,
+            floor,
+            bookshelf,
+            classification,
+            createDate,
+            isDelete
+         )values (
+            #{bookId},
+            #{bookName},
+            #{bookDescription},
+            #{author},
+            #{publisher},
+            #{isbn},
+            #{paperback},
+            #{img},
+            #{total},
+            #{Inventory},
+            #{floor},
+            #{bookshelf},
+            #{classification},
+            #{createDate},
+            #{isDelete}
+        )
+    </insert>
+
+    <update id="updBook" parameterType="com.alibaba.fastjson.JSONObject">
+        update tbbook
+        <set>
+            <if test="bookName != null and bookName != ''">bookName=#{bookName},</if>
+            <if test="bookDescription != null and bookDescription != ''">bookDescription=#{bookDescription},</if>
+            <if test="author != null and author != ''">author=#{author},</if>
+            <if test="publisher != null and publisher != ''">publisher=#{publisher},</if>
+            <if test="paperback != null and paperback != ''">paperback=#{paperback},</if>
+            <if test="img != null and img != ''">img=#{img},</if>
+            <if test="total != null">total=#{total},</if>
+            <if test="Inventory != null and Inventory != ''">bookName=#{Inventory},</if>
+            <if test="floor != null and floor != ''">floor=#{floor},</if>
+            <if test="bookshelf != null and bookshelf != ''">bookshelf=#{bookshelf},</if>
+            <if test="classification != null and classification != ''">classification=#{classification},</if>
+        </set>
+    </update>
+
+    <delete id="delBook" parameterType="java.lang.String">
+        update tbbook set isDelete = 1 where bookId = #{_parameter}
+    </delete>
+</mapper>
